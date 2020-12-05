@@ -1,28 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
 
-        <title>Result</title>
-    </head>
-    <body class="p-3 mb-2 bg-light text-black">
-        <div class="container justify-content-center w-50 p-3" style="margin-top: 5em;">
-            <div class="alert alert-success fill-parent">
-                <h1 class="display-5">Success</h1>
-                <span>Your changes were successfully saved. Click <a>here</a> to continue.</span>
-            </div>
-            <div class="alert alert-danger fill-parent">
-                <h1 class="display-5">Error</h1>
-                <span>Your changes were not saved. Click <a>here</a> to continue.</span>
-            </div>
-            <div class="alert alert-danger fill-parent">
-                <h1 class="display-5">Error</h1>
-                <span>Example Error Message</span>
-                <span>Click <a>here</a> to continue.</span>
-            </div>
-        </div>
-    </body>
+    <title>Result</title>
+</head>
+<body class="p-3 mb-2 bg-light text-black">
+<div class="container justify-content-center w-50 p-3" style="margin-top: 5em;">
+    <!-- ################# NOTES MESSAGES ################ -->
+    <div class="alert alert-success fill-parent" th:if="${fileSuccess}">
+        <h1 class="display-5">Success</h1>
+        <span>Your changes were successfully saved. Click <a th:href="@{/home}">here</a> to continue.</span>
+    </div>
+    <div class="alert alert-danger fill-parent" th:if="${fileFailure}" >
+        <h1 class="display-5">Error</h1>
+        <span>please choose a file to upload. Click <a th:href="@{/home}">here</a> to continue.</span>
+    </div>
+    <div class="alert alert-danger fill-parent" th:if="${fileTooBigFailure}">
+        <h1 class="display-5">Error</h1>
+        <span>your file is too big</span>
+        <span>Click <a th:href="@{/home}">here</a> to continue.</span>
+    </div>
+    <div class="alert alert-danger fill-parent" th:if="${fileExists}">
+        <h1 class="display-5">Error</h1>
+        <span>file exists </span>
+        <span>Click <a th:href="@{/home}">here</a> to continue.</span>
+    </div>
+    <!-- ################# NOTES MESSAGES ################ -->
+    <div class="alert alert-success fill-parent" th:if="${noteSuccess}">
+        <h1 class="display-5">Success</h1>
+        <span>Your Note Action was successful. Click <a th:href="@{/home}">here</a> to continue.</span>
+    </div>
+    <div class="alert alert-danger fill-parent" th:if="${noteFailure}">
+        <h1 class="display-5">Error</h1>
+        <span>Your changes on the Note did not happen, something went wrong try again later </span>
+        <span>Click <a th:href="@{/home}">here</a> to continue.</span>
+    </div>
+    <!-- ################# CREDENTIAL MESSAGES ################ -->
+    <div class="alert alert-success fill-parent" th:if="${credentialSuccess}">
+        <h1 class="display-5">Success</h1>
+        <span>Your Credential Action was successful. Click <a th:href="@{/home}">here</a> to continue.</span>
+    </div>
+    <div class="alert alert-danger fill-parent" th:if="${credentialFailure}">
+        <h1 class="display-5">Error</h1>
+        <span>Your changes on the Credential did not happen, something went wrong try again later </span>
+        <span>Click <a th:href="@{/home}">here</a> to continue.</span>
+    </div>
+</div>
+</body>
 </html>
