@@ -124,7 +124,6 @@ public class HomeController {
       int rowsAdded = notesService.insertNewNote(newNote);
       if (rowsAdded == 1) {
         model.addAttribute("noteSuccess", true);
-        System.out.println(newNote.toString() + "AAAAAAAAAHHHHHH");
       } else {
         model.addAttribute("noteFailure", true);
       }
@@ -145,10 +144,8 @@ public class HomeController {
 
     if (deletedRows == 1) {
       model.addAttribute("noteSuccess", true);
-      System.out.println("NOTE SHOULD'VE BEEN DELETED");
     } else {
       model.addAttribute("noteFailure", true);
-      System.out.println("NOTE HAS NOT BEEN DELETED");
     }
     return "result";
   }
@@ -165,20 +162,16 @@ public class HomeController {
       int rowsAdded = credentialService.insertNewCred(newCredential);
       if(rowsAdded == 1){
         model.addAttribute("credentialSuccess", true);
-        System.out.println(newCredential.toString() + "CREDENTIAL SHOULD'VE BEEN ADDED");
       } else {
         model.addAttribute("credentialFailure", true);
-        System.out.println("CREDENTIAL HAS NOT BEEN ADDED");
       }
       return "result";
     } else {
       int rowsUpdated = credentialService.updateCredential(newCredential);
       if(rowsUpdated == 1){
         model.addAttribute("credentialSuccess", true);
-        System.out.println("CREDENTIAL SHOULD'VE BEEN UPDATED");
       } else {
         model.addAttribute("credentialFailure", true);
-        System.out.println("CREDENTIAL HAS NOT BEEN UPDATED");
       }
       return "result";
     }
@@ -190,10 +183,8 @@ public class HomeController {
 
     if (deleteRows == 1){
       model.addAttribute("credentialSuccess", true);
-      System.out.println("CREDENTIAL DELETED");
     }else{
       model.addAttribute("credentialFailure", true);
-      System.out.println("CREDENTIAL NOT DELETED");
     }
     return "result";
   }

@@ -66,16 +66,4 @@ public class SuperDuperCredentials {
   public void setPassword(String password) {
     this.password = password;
   }
-
-  @Override
-  public String toString() {
-    return "SuperDuperCredentials{" +
-        "credentialId=" + credentialId +
-        ", userid=" + userid +
-        ", url='" + url + '\'' +
-        ", username='" + username + '\'' +
-        ", key='" + key + '\'' +
-        ", password='" + password + '\'' +
-        '}';
-  }
 }

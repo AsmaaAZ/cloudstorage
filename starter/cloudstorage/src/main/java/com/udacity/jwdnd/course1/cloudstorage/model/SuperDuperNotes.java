@@ -48,14 +48,4 @@ public class SuperDuperNotes {
   public void setNoteDescription(String noteDescription) {
     this.noteDescription = noteDescription;
   }
-
-  @Override
-  public String toString() {
-    return "SuperDuperNotes{" +
-        "noteId=" + noteId +
-        ", userid=" + userid +
-        ", noteTitle='" + noteTitle + '\'' +
-        ", noteDescription='" + noteDescription + '\'' +
-        '}';
-  }
 }

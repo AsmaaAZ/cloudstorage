@@ -18,8 +18,8 @@ public interface CredentialsMapper {
   @Select("SELECT * FROM CREDENTIALS WHERE userid = #{userid}")
   List<SuperDuperCredentials> getAllCreds(Integer userid);
 
-  @Insert("INSERT INTO CREDENTIALS (url, username, key, password)"
-      + " VALUES (#{url},#{username},#{key},#{password})")
+  @Insert("INSERT INTO CREDENTIALS (userid, url, username, key, password)"
+      + " VALUES (#{userid}, #{url},#{username},#{key},#{password})")
   @Options(useGeneratedKeys = true, keyProperty = "credentialId")
   int insertCredential(SuperDuperCredentials cred);
 
