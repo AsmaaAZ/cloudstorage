@@ -31,11 +31,24 @@ class CloudStorageApplicationTests {
 			driver.quit();
 		}
 	}
-
+	@Order(1)
 	@Test
 	public void getLoginPage() {
 		driver.get("http://localhost:" + this.port + "/login");
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
+	@Order(2)
+	@Test
+	public void getSignupPage() {
+		driver.get("http://localhost:" + this.port + "/signup");
+		Assertions.assertEquals("Sign Up", driver.getTitle());
+	}
+
+	@Order(3)
+	@Test
+	public void getHomePageUnauther() {
+		driver.get("http://localhost:" + this.port + "/home");
+		Assertions.assertEquals("Login", driver.getTitle());
+	}
 }
