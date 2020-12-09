@@ -32,22 +32,3 @@ public class SuperDuperSecurityConfiguration extends WebSecurityConfigurerAdapte
         .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").permitAll();
   }
 }
-
-/* http.authorizeRequests().antMatchers("/signup", "/login", "/css/**", "/js/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/login?logout");;
-        http.formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .defaultSuccessUrl("/home", true);
-    }
-* */
