@@ -29,7 +29,7 @@ public class SuperDuperSecurityConfiguration extends WebSecurityConfigurerAdapte
     http.formLogin().loginPage("/login").permitAll();
     http.formLogin().defaultSuccessUrl("/home",true).failureUrl("/login?error")
         .and().logout().invalidateHttpSession(true).clearAuthentication(true)
-        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").permitAll();
   }
 }
 
