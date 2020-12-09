@@ -1,9 +1,14 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.pageobjects.LoginPageTests;
+import com.udacity.jwdnd.course1.cloudstorage.pageobjects.SignupPageTests;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
@@ -31,24 +36,64 @@ class CloudStorageApplicationTests {
 			driver.quit();
 		}
 	}
+
+	//Test permit
 	@Order(1)
 	@Test
-	public void getLoginPage() {
+	public void getLoginPageTest() {
 		driver.get("http://localhost:" + this.port + "/login");
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
+	//Test permit
 	@Order(2)
 	@Test
-	public void getSignupPage() {
+	public void getSignupPageTest() {
 		driver.get("http://localhost:" + this.port + "/signup");
 		Assertions.assertEquals("Sign Up", driver.getTitle());
 	}
 
+	//test unauthorized access
 	@Order(3)
 	@Test
-	public void getHomePageUnauther() {
+	public void getUnauthorizedHomePageTest() {
 		driver.get("http://localhost:" + this.port + "/home");
+		Assertions.assertNotEquals("Home", driver.getTitle());
+	}
+
+	//test unauthorized access
+	@Order(4)
+	@Test
+	public void getUnauthorizedResultPageTest(){
+		driver.get("http://localhost:" + this.port + "/result");
+		Assertions.assertNotEquals("Result", driver.getTitle());
+	}
+
+	//duplicate user not allowed test
+	@Order(5)
+	@Test
+	public void duplicatedUsersTest(){
+		SignupPageTests spt = new SignupPageTests(driver);
+		spt.duplicateUser(driver, port);
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".alert.alert-danger")));
+		Assertions.assertEquals("Sign Up", driver.getTitle());
+	}
+
+	//sign up, login, logout & verify logout
+	@Order(6)
+	@Test
+	public void doSignupLoginLogoutTest(){
+		LoginPageTests lpt = new LoginPageTests(driver);
+		lpt.loginSignupLoginLogoutProcess(driver,port);
+		WebDriverWait wait = new WebDriverWait(driver,5);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".alert.alert-dark")));
+		driver.get("http://localhost:" + port + "/home");
 		Assertions.assertEquals("Login", driver.getTitle());
+	}
+
+	@Order(7)
+	@Test
+	public void doNotesOperations(){
 	}
 }
