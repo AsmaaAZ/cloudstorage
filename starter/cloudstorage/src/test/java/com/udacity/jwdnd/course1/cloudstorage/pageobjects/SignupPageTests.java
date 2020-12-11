@@ -27,8 +27,7 @@ public class SignupPageTests {
     PageFactory.initElements(driver,this);
   }
 
-  public void newUserRegistration(WebDriver driver){
-    driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+  public void registerForOperations(WebDriver driver){
     inputFirstName.clear();
     inputLastName.clear();
     inputUsername.clear();
@@ -41,9 +40,6 @@ public class SignupPageTests {
     subBtn.click();
     driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
     ancherLogin.click();
-
-    LoginPageTests lpt = new LoginPageTests(driver);
-    lpt.loginToLogout(driver);
   }
 
   public void duplicateUser(WebDriver driver, int port){
@@ -71,5 +67,4 @@ public class SignupPageTests {
     inputPassword.sendKeys("ha11");
     subBtn.click();
   }
-
 }

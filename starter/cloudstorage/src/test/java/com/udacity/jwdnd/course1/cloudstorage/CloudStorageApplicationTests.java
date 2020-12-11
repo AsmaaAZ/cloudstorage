@@ -84,9 +84,10 @@ class CloudStorageApplicationTests {
 	@Order(6)
 	@Test
 	public void doSignupLoginLogoutTest(){
+		driver.get("http://localhost:" + port + "/login");
 		LoginPageTests lpt = new LoginPageTests(driver);
-		lpt.loginSignupLoginLogoutProcess(driver,port);
 		WebDriverWait wait = new WebDriverWait(driver,5);
+		lpt.loginSignupLoginLogoutProcess(driver,port);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".alert.alert-dark")));
 		driver.get("http://localhost:" + port + "/home");
 		Assertions.assertEquals("Login", driver.getTitle());
@@ -95,5 +96,12 @@ class CloudStorageApplicationTests {
 	@Order(7)
 	@Test
 	public void doNotesOperations(){
+		driver.get("http://localhost:" + port + "/login");
+		LoginPageTests lpt = new LoginPageTests(driver);
+		lpt.notesLogin(driver, port);
+
+
+
+		Assertions.assertEquals("Home", driver.getTitle());
 	}
 }

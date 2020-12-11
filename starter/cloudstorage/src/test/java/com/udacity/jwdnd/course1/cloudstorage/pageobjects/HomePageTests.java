@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class HomePageTests {
-  @FindBy(css = ".btn.btn-secondary.float-right")
+  @FindBy(css = ".btn.btn-secondary")
   private WebElement logoutBtn;
 
   public HomePageTests(WebDriver driver) {
