@@ -39,6 +39,8 @@ public class LoginPageTests {
     SignupPageTests spt = new SignupPageTests(driver);
     spt.registerForOperations(driver);
     loginForOperations(driver);
+    HomePageTests hpt = new HomePageTests(driver);
+    hpt.addNote(driver);
   }
 
   public void loginForOperations(WebDriver driver){
@@ -49,5 +51,6 @@ public class LoginPageTests {
     inputPassword.sendKeys("ha11");
     subBtn.click();
     driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+
   }
 }

@@ -3,9 +3,11 @@ package com.udacity.jwdnd.course1.cloudstorage;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.LoginPageTests;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.SignupPageTests;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import java.util.List;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -94,15 +96,19 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
+	//Create a note & verify it's displayed
 	@Order(7)
 	@Test
 	public void doNotesOperations(){
+		boolean opDone = false;
 		driver.get("http://localhost:" + port + "/login");
 		LoginPageTests lpt = new LoginPageTests(driver);
 		lpt.notesLogin(driver, port);
-
-
-
-		Assertions.assertEquals("Home", driver.getTitle());
+		driver.findElement(By.id("nav-notes-tab")).click();
+		List<WebElement> rows = driver.findElements(By.xpath("/html/body/div/div[2]/div/div[2]/div[1]/table/tbody/tr"));
+		for (WebElement row : rows) {
+			opDone = row.isDisplayed();
+		}
+		Assertions.assertTrue(opDone);
 	}
 }
