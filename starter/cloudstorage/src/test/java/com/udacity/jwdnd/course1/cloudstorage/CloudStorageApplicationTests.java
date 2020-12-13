@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.pageobjects.HomePageTests;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.LoginPageTests;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.SignupPageTests;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -99,16 +100,51 @@ class CloudStorageApplicationTests {
 	//Create a note & verify it's displayed
 	@Order(7)
 	@Test
-	public void doNotesOperations(){
-		boolean opDone = false;
+	public void notesCreationTest(){
+		String noteTitle = "";
 		driver.get("http://localhost:" + port + "/login");
 		LoginPageTests lpt = new LoginPageTests(driver);
 		lpt.notesLogin(driver, port);
+		HomePageTests hpt = new HomePageTests(driver);
+		hpt.addNote(driver);
 		driver.findElement(By.id("nav-notes-tab")).click();
-		List<WebElement> rows = driver.findElements(By.xpath("/html/body/div/div[2]/div/div[2]/div[1]/table/tbody/tr"));
+		List<WebElement> rows = driver.findElements(By.cssSelector("#userTable > tbody:nth-child(2) > tr:nth-child(1) > th:nth-child(2)"));
 		for (WebElement row : rows) {
-			opDone = row.isDisplayed();
+			noteTitle = row.getText();
 		}
-		Assertions.assertTrue(opDone);
+		Assertions.assertEquals("a note title", noteTitle);
+	}
+
+	//Edit and existing note and verify the edit
+	@Order(8)
+	@Test
+	public void notesEditTest(){
+		String noteTitle = "";
+		driver.get("http://localhost:" + port + "/login");
+		LoginPageTests lpt = new LoginPageTests(driver);
+		lpt.notesLogin(driver, port);
+		HomePageTests hpt = new HomePageTests(driver);
+		hpt.editNote(driver);
+		driver.findElement(By.id("nav-notes-tab")).click();
+		List<WebElement> rows = driver.findElements(By.cssSelector("#userTable > tbody:nth-child(2) > tr:nth-child(1) > th:nth-child(2)"));
+		for (WebElement row : rows) {
+			noteTitle = row.getText();
+		}
+		Assertions.assertEquals("an edited note title", noteTitle);
+	}
+
+	@Order(9)
+	@Test
+	public void noteDeletionTest(){
+		boolean deletedNote;
+		driver.get("http://localhost:" + port + "/login");
+		LoginPageTests lpt = new LoginPageTests(driver);
+		lpt.notesLogin(driver, port);
+		HomePageTests hpt = new HomePageTests(driver);
+		hpt.deleteNote(driver);
+		driver.findElement(By.id("nav-notes-tab")).click();
+		List<WebElement> rows = driver.findElements(By.cssSelector("#userTable > tbody:nth-child(2) > tr:nth-child(1)"));
+		deletedNote = rows.size() < 1;
+		Assertions.assertTrue(deletedNote);
 	}
 }

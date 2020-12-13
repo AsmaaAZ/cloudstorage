@@ -16,7 +16,7 @@ public class LoginPageTests {
   @FindBy(css = ".btn.btn-primary")
   private WebElement subBtn;
   @FindBy(linkText = "here")
-  private WebElement ancherHere;
+  private WebElement anchorHere;
 
   public LoginPageTests(WebDriver driver) {
     PageFactory.initElements(driver, this);
@@ -24,7 +24,7 @@ public class LoginPageTests {
 
   public void loginSignupLoginLogoutProcess(WebDriver driver, int port) {
     loginForOperations(driver);
-    ancherHere.click();
+    anchorHere.click();
     SignupPageTests toSignupPage = new SignupPageTests(driver);
     toSignupPage.registerForOperations(driver);
     loginForOperations(driver);
@@ -35,12 +35,10 @@ public class LoginPageTests {
 
   public void notesLogin(WebDriver driver, int port){
     loginForOperations(driver);
-    ancherHere.click();
+    anchorHere.click();
     SignupPageTests spt = new SignupPageTests(driver);
     spt.registerForOperations(driver);
     loginForOperations(driver);
-    HomePageTests hpt = new HomePageTests(driver);
-    hpt.addNote(driver);
   }
 
   public void loginForOperations(WebDriver driver){

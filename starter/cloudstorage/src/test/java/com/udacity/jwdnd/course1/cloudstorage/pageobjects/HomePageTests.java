@@ -2,12 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.pageobjects;
 // @author asmaa **
 
 
-import java.lang.management.ThreadInfo;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
-import jdk.dynalink.linker.LinkerServices;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,12 +15,18 @@ public class HomePageTests {
   private WebElement notesTab;
   @FindBy(id = "add-Note")
   private WebElement addNoteBtn;
+  @FindBy(id = "note-id")
+  private WebElement noteId;
   @FindBy(id = "note-title")
   private WebElement noteTitle;
   @FindBy(id = "note-description")
   private WebElement noteDescription;
   @FindBy(id = "notes-save")
   private WebElement noteSave;
+  @FindBy(css = ".btn-success")
+  private WebElement editNoteBtn;
+  @FindBy(css = "a.btn")
+  private WebElement deleteNoteBtn;
 
 
   public HomePageTests(WebDriver driver) {
@@ -50,4 +51,26 @@ public class HomePageTests {
     ResultsPageTests rpt = new ResultsPageTests(driver);
     rpt.successRedirect(driver);
   }
+
+  public void editNote(WebDriver driver){
+    addNote(driver);
+    notesTab.click();
+    editNoteBtn.click();
+    noteTitle.clear();
+    noteTitle.sendKeys("an edited note title");
+    noteSave.click();
+    driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
+    ResultsPageTests rpt = new ResultsPageTests(driver);
+    rpt.successRedirect(driver);
+  }
+
+  public void deleteNote(WebDriver driver){
+    addNote(driver);
+    notesTab.click();
+    deleteNoteBtn.click();
+    driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
+    ResultsPageTests rpt = new ResultsPageTests(driver);
+    rpt.successRedirect(driver);
+  }
+
 }
