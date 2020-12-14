@@ -51,4 +51,12 @@ public class LoginPageTests {
     driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
   }
+
+  public void credentialLogin(WebDriver driver){
+    loginForOperations(driver);
+    anchorHere.click();
+    SignupPageTests spt = new SignupPageTests(driver);
+    spt.registerForOperations(driver);
+    loginForOperations(driver);
+  }
 }
