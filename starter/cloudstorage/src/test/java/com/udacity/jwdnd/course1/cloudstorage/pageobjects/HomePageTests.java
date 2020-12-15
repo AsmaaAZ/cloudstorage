@@ -2,11 +2,15 @@ package com.udacity.jwdnd.course1.cloudstorage.pageobjects;
 // @author asmaa **
 
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePageTests {
   @FindBy(css = ".btn.btn-secondary")
@@ -22,8 +26,8 @@ public class HomePageTests {
   private WebElement noteTitle;
   @FindBy(id = "note-description")
   private WebElement noteDescription;
-  @FindBy(css = "#notes-save")
-  private WebElement noteSave;
+  @FindBy(id = "notes-save")
+  private WebElement noteSaveBtn;
   @FindBy(css = ".btn-success")
   private WebElement editNoteBtn;
   @FindBy(css = "a.btn")
@@ -41,6 +45,12 @@ public class HomePageTests {
   private WebElement credPwd;
   @FindBy(css = "#credentialModal > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)")
   private WebElement credSaveBtn;
+  @FindBy(css = ".btn-success")
+  private WebElement editCredBtn;
+  @FindBy(id = "credential-save")
+  private WebElement saveCredBtn;
+  @FindBy(css = "a.btn.btn-danger")
+  private WebElement deleteCredBtn;
 
   public HomePageTests(WebDriver driver) {
     PageFactory.initElements(driver, this);
@@ -50,7 +60,7 @@ public class HomePageTests {
     driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     logoutBtn.click();
   }
-
+  //############ Note Operations ###############
   public void addNote(WebDriver driver){
     notesTab.click();
     driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
@@ -59,7 +69,7 @@ public class HomePageTests {
     noteDescription.clear();
     noteTitle.sendKeys("a note title");
     noteDescription.sendKeys("some description to make this note\n\n ..\n cool");
-    noteSave.click();
+    noteSaveBtn.click();
     driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
     ResultsPageTests rpt = new ResultsPageTests(driver);
     rpt.successRedirect(driver);
@@ -71,7 +81,7 @@ public class HomePageTests {
     editNoteBtn.click();
     noteTitle.clear();
     noteTitle.sendKeys("an edited note title");
-    noteSave.click();
+    noteSaveBtn.click();
     driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
     ResultsPageTests rpt = new ResultsPageTests(driver);
     rpt.successRedirect(driver);
@@ -79,14 +89,15 @@ public class HomePageTests {
 
   public void deleteNote(WebDriver driver){
     addNote(driver);
+    List<WebElement> rows = driver.findElements(By.cssSelector("#userTable > tbody:nth-child(2) > tr:nth-child(1)"));
     notesTab.click();
     deleteNoteBtn.click();
     driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
     ResultsPageTests rpt = new ResultsPageTests(driver);
     rpt.successRedirect(driver);
   }
-
-  public void credentialCreation(WebDriver driver){
+//############ Credential Operations ###############
+  public void createCredential(WebDriver driver){
     credentialTab.click();
     addCredentialBtn.click();
     credUrl.clear();
@@ -100,5 +111,27 @@ public class HomePageTests {
     ResultsPageTests rpt = new ResultsPageTests(driver);
     rpt.successRedirect(driver);
     credentialTab.click();
+  }
+
+  public boolean editCredential(WebDriver driver){
+    createCredential(driver);
+    editCredBtn.click();
+    credUrl.clear();
+    credUrl.sendKeys("https://twitter.com/");
+    boolean isDecrypted = credPwd.getAttribute("value").equals("Gooooo");
+    saveCredBtn.click();
+    ResultsPageTests rpt = new ResultsPageTests(driver);
+    rpt.successRedirect(driver);
+    return isDecrypted;
+  }
+
+  public void deleteCredential(WebDriver driver){
+    createCredential(driver);
+    List<WebElement> rows = driver.findElements(By.cssSelector("#credentialTable > tbody:nth-child(2) > tr:nth-child(1)"));
+    credentialTab.click();
+    deleteCredBtn.click();
+    driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
+    ResultsPageTests rpt = new ResultsPageTests(driver);
+    rpt.successRedirect(driver);
   }
 }

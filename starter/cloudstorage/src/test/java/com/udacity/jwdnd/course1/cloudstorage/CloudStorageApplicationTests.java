@@ -3,13 +3,8 @@ package com.udacity.jwdnd.course1.cloudstorage;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.HomePageTests;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.LoginPageTests;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.SignupPageTests;
-import com.udacity.jwdnd.course1.cloudstorage.service.CredentialService;
-import com.udacity.jwdnd.course1.cloudstorage.service.EncryptionService;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import java.security.SecureRandom;
-import java.util.Base64;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -152,21 +147,52 @@ class CloudStorageApplicationTests {
 		deletedNote = rows.size() < 1;
 		Assertions.assertTrue(deletedNote);
 	}
-
+	//Test creating credential and checking if password is encrypted
 	@Order(10)
 	@Test
-	public void createCredential(){
-		WebDriverWait wait = new WebDriverWait(driver, 3);
+	public void createCredentialTest(){
 		driver.get("http://localhost:" + port + "/login");
 		LoginPageTests lpt = new LoginPageTests(driver);
 		lpt.credentialLogin(driver);
 		HomePageTests hpt = new HomePageTests(driver);
-		hpt.credentialCreation(driver);
+		hpt.createCredential(driver);
 
 		String pwd = "Gooooo";
 		String encryptedPwd = driver.findElement(By.xpath("//table/tbody/tr[1]/td[3]")).getText();
 		System.out.println("encrypted password = " + encryptedPwd + "@@@@@@@@@@@@");
 
 		Assertions.assertNotEquals(pwd, encryptedPwd);
+	}
+
+	//test editing credentials, verify editing and making sure that the password is decrypted in the dialog
+	@Order(11)
+	@Test
+	public void editCredentialTest(){
+		String newUrl = "nothing";
+		driver.get("http://localhost:" + port + "/login");
+		LoginPageTests lpt = new LoginPageTests(driver);
+		lpt.credentialLogin(driver);
+		HomePageTests hpt = new HomePageTests(driver);
+		boolean isDecrypted = hpt.editCredential(driver);
+		if(isDecrypted){
+			newUrl = driver.findElement(By.cssSelector("#credentialTable > tbody:nth-child(2) > tr:nth-child(1) > th:nth-child(2)")).getAttribute("innerHTML");
+		}
+		Assertions.assertEquals("https://twitter.com/", newUrl);
+	}
+
+	//test deleting credential and verifying it has been deleted
+	@Order(12)
+	@Test
+	public void deleteCredentialTest(){
+		boolean deletedCred;
+		driver.get("http://localhost:" + port + "/login");
+		LoginPageTests lpt = new LoginPageTests(driver);
+		lpt.credentialLogin(driver);
+		HomePageTests hpt = new HomePageTests(driver);
+		hpt.deleteCredential(driver);
+		driver.findElement(By.id("nav-credentials-tab")).click();
+		List<WebElement> rows = driver.findElements(By.cssSelector("#credentialTable > tbody:nth-child(2) > tr:nth-child(1)"));
+		deletedCred = rows.size() < 1;
+		Assertions.assertTrue(deletedCred);
 	}
 }
