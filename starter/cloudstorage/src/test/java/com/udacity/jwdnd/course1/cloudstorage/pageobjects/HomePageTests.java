@@ -2,15 +2,11 @@ package com.udacity.jwdnd.course1.cloudstorage.pageobjects;
 // @author asmaa **
 
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePageTests {
   @FindBy(css = ".btn.btn-secondary")
@@ -89,7 +85,8 @@ public class HomePageTests {
 
   public void deleteNote(WebDriver driver){
     addNote(driver);
-    List<WebElement> rows = driver.findElements(By.cssSelector("#userTable > tbody:nth-child(2) > tr:nth-child(1)"));
+    addNote(driver);
+    addNote(driver);
     notesTab.click();
     deleteNoteBtn.click();
     driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
@@ -127,7 +124,7 @@ public class HomePageTests {
 
   public void deleteCredential(WebDriver driver){
     createCredential(driver);
-    List<WebElement> rows = driver.findElements(By.cssSelector("#credentialTable > tbody:nth-child(2) > tr:nth-child(1)"));
+    createCredential(driver);
     credentialTab.click();
     deleteCredBtn.click();
     driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);

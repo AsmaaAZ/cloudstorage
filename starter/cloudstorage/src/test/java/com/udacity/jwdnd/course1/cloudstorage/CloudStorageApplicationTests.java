@@ -88,12 +88,11 @@ class CloudStorageApplicationTests {
   //sign up, login, logout & verify logout
   @Order(6)
   @Test
-  public void doSignupLoginLogoutTest() throws InterruptedException {
+  public void doSignupLoginLogoutTest() {
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
     WebDriverWait wait = new WebDriverWait(driver, 5);
-    lpt.loginSignupLoginLogoutProcess(driver, port);
-    Thread.sleep(3000);
+    lpt.loginSignupLoginLogoutProcess(driver);
     wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".alert")));
     driver.get("http://localhost:" + port + "/home");
     Assertions.assertEquals("Login", driver.getTitle());
@@ -102,12 +101,11 @@ class CloudStorageApplicationTests {
   //Create a note & verify it's displayed
   @Order(7)
   @Test
-  public void notesCreationTest() throws InterruptedException {
+  public void notesCreationTest() {
     String noteTitle = "";
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
-    lpt.notesLogin(driver, port);
-    Thread.sleep(3000);
+    lpt.notesLogin(driver);
     HomePageTests hpt = new HomePageTests(driver);
     hpt.addNote(driver);
     driver.findElement(By.id("nav-notes-tab")).click();
@@ -122,12 +120,11 @@ class CloudStorageApplicationTests {
   //Edit and existing note and verify the edit
   @Order(8)
   @Test
-  public void notesEditTest() throws InterruptedException {
+  public void notesEditTest() {
     String noteTitle = "";
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
-    lpt.notesLogin(driver, port);
-    Thread.sleep(3000);
+    lpt.notesLogin(driver);
     HomePageTests hpt = new HomePageTests(driver);
     hpt.editNote(driver);
     driver.findElement(By.id("nav-notes-tab")).click();
@@ -142,28 +139,24 @@ class CloudStorageApplicationTests {
   //Test to delete a note
   @Order(9)
   @Test
-  public void noteDeletionTest() throws InterruptedException {
-    boolean deletedNote;
+  public void noteDeletionTest() {
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
-    lpt.notesLogin(driver, port);
-    Thread.sleep(3000);
+    lpt.notesLogin(driver);
     HomePageTests hpt = new HomePageTests(driver);
     hpt.deleteNote(driver);
     driver.findElement(By.id("nav-notes-tab")).click();
-    List<WebElement> rows = driver.findElements(By.tagName("td"));
-    deletedNote = rows.isEmpty();
-    Assertions.assertTrue(deletedNote);
+    List<WebElement> rows = driver.findElements(By.cssSelector("#userTable > tbody > tr"));
+    Assertions.assertEquals(2, rows.size());
   }
 
   //Test creating credential and checking if password is encrypted
   @Order(10)
   @Test
-  public void createCredentialTest() throws InterruptedException {
+  public void createCredentialTest() {
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
     lpt.credentialLogin(driver);
-    Thread.sleep(3000);
     HomePageTests hpt = new HomePageTests(driver);
     hpt.createCredential(driver);
 
@@ -177,12 +170,11 @@ class CloudStorageApplicationTests {
   //test editing credentials, verify editing and making sure that the password is decrypted in the dialog
   @Order(11)
   @Test
-  public void editCredentialTest() throws InterruptedException {
+  public void editCredentialTest() {
     String newUrl = "nothing";
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
     lpt.credentialLogin(driver);
-    Thread.sleep(3000);
     HomePageTests hpt = new HomePageTests(driver);
     boolean isDecrypted = hpt.editCredential(driver);
     if (isDecrypted) {
@@ -196,19 +188,14 @@ class CloudStorageApplicationTests {
   //test deleting credential and verifying it has been deleted
   @Order(12)
   @Test
-  public void deleteCredentialTest() throws InterruptedException {
-    boolean deletedCred = false;
+  public void deleteCredentialTest() {
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
     lpt.credentialLogin(driver);
-    Thread.sleep(3000);
     HomePageTests hpt = new HomePageTests(driver);
     hpt.deleteCredential(driver);
     driver.findElement(By.id("nav-credentials-tab")).click();
-    List<WebElement> rows = driver.findElements(By.tagName("td"));
-    System.out.println(rows + "@@@@rows@@@@@@");
-    deletedCred = rows.isEmpty();
-
-    Assertions.assertTrue(deletedCred);
+    List<WebElement> rows = driver.findElements(By.cssSelector("#credentialTable > tbody > tr"));
+    Assertions.assertEquals(1, rows.size());
   }
 }

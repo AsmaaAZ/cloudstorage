@@ -22,7 +22,7 @@ public class LoginPageTests {
     PageFactory.initElements(driver, this);
   }
 
-  public void loginSignupLoginLogoutProcess(WebDriver driver, int port) {
+  public void loginSignupLoginLogoutProcess(WebDriver driver) {
     loginForOperations(driver);
     anchorHere.click();
     SignupPageTests toSignupPage = new SignupPageTests(driver);
@@ -33,7 +33,7 @@ public class LoginPageTests {
     hpt.logoutUser(driver);
   }
 
-  public void notesLogin(WebDriver driver, int port){
+  public void notesLogin(WebDriver driver) {
     loginForOperations(driver);
     anchorHere.click();
     SignupPageTests spt = new SignupPageTests(driver);
@@ -41,18 +41,16 @@ public class LoginPageTests {
     loginForOperations(driver);
   }
 
-  public void loginForOperations(WebDriver driver){
+  public void loginForOperations(WebDriver driver) {
     inputUsername.clear();
     inputPassword.clear();
 
     inputUsername.sendKeys("Azmeh");
     inputPassword.sendKeys("ha11");
     subBtn.click();
-    driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-
   }
 
-  public void credentialLogin(WebDriver driver){
+  public void credentialLogin(WebDriver driver) {
     loginForOperations(driver);
     anchorHere.click();
     SignupPageTests spt = new SignupPageTests(driver);
