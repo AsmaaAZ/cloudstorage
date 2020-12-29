@@ -86,7 +86,6 @@ public class HomePageTests {
   public void deleteNote(WebDriver driver){
     addNote(driver);
     addNote(driver);
-    addNote(driver);
     notesTab.click();
     deleteNoteBtn.click();
     driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);

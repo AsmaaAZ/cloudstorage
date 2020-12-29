@@ -105,7 +105,7 @@ class CloudStorageApplicationTests {
     String noteTitle = "";
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
-    lpt.notesLogin(driver);
+    lpt.notesLogin(driver, "create");
     HomePageTests hpt = new HomePageTests(driver);
     hpt.addNote(driver);
     driver.findElement(By.id("nav-notes-tab")).click();
@@ -124,7 +124,7 @@ class CloudStorageApplicationTests {
     String noteTitle = "";
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
-    lpt.notesLogin(driver);
+    lpt.notesLogin(driver, "edit");
     HomePageTests hpt = new HomePageTests(driver);
     hpt.editNote(driver);
     driver.findElement(By.id("nav-notes-tab")).click();
@@ -136,18 +136,18 @@ class CloudStorageApplicationTests {
     Assertions.assertEquals("an edited note title", noteTitle);
   }
 
-  //Test to delete a note
+  //Test to delete a note why is edited note showing? hmmm
   @Order(9)
   @Test
   public void noteDeletionTest() {
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
-    lpt.notesLogin(driver);
+    lpt.notesLogin(driver, "delete");
     HomePageTests hpt = new HomePageTests(driver);
     hpt.deleteNote(driver);
     driver.findElement(By.id("nav-notes-tab")).click();
     List<WebElement> rows = driver.findElements(By.cssSelector("#userTable > tbody > tr"));
-    Assertions.assertEquals(2, rows.size());
+    Assertions.assertEquals(1, rows.size());
   }
 
   //Test creating credential and checking if password is encrypted
@@ -156,13 +156,12 @@ class CloudStorageApplicationTests {
   public void createCredentialTest() {
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
-    lpt.credentialLogin(driver);
+    lpt.credentialLogin(driver, "create");
     HomePageTests hpt = new HomePageTests(driver);
     hpt.createCredential(driver);
 
     String pwd = "Gooooo";
     String encryptedPwd = driver.findElement(By.xpath("//table/tbody/tr[1]/td[3]")).getText();
-    System.out.println("encrypted password = " + encryptedPwd + "@@@@@@@@@@@@");
 
     Assertions.assertNotEquals(pwd, encryptedPwd);
   }
@@ -174,7 +173,7 @@ class CloudStorageApplicationTests {
     String newUrl = "nothing";
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
-    lpt.credentialLogin(driver);
+    lpt.credentialLogin(driver, "edit");
     HomePageTests hpt = new HomePageTests(driver);
     boolean isDecrypted = hpt.editCredential(driver);
     if (isDecrypted) {
@@ -191,7 +190,7 @@ class CloudStorageApplicationTests {
   public void deleteCredentialTest() {
     driver.get("http://localhost:" + port + "/login");
     LoginPageTests lpt = new LoginPageTests(driver);
-    lpt.credentialLogin(driver);
+    lpt.credentialLogin(driver, "delete");
     HomePageTests hpt = new HomePageTests(driver);
     hpt.deleteCredential(driver);
     driver.findElement(By.id("nav-credentials-tab")).click();

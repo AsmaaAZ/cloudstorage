@@ -27,16 +27,16 @@ public class SignupPageTests {
     PageFactory.initElements(driver,this);
   }
 
-  public void registerForOperations(WebDriver driver){
+  public void registerForOperations(WebDriver driver, String fname, String lname, String uname, String pwd){
     inputFirstName.clear();
     inputLastName.clear();
     inputUsername.clear();
     inputPassword.clear();
 
-    inputFirstName.sendKeys("asmaa");
-    inputLastName.sendKeys("AZ");
-    inputUsername.sendKeys("Azmeh");
-    inputPassword.sendKeys("ha11");
+    inputFirstName.sendKeys(fname);
+    inputLastName.sendKeys(lname);
+    inputUsername.sendKeys(uname);
+    inputPassword.sendKeys(pwd);
     subBtn.click();
     driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
     ancherLogin.click();
