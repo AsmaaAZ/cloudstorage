@@ -16,6 +16,8 @@
 
     <properties>
         <java.version>11</java.version>
+        <dockerfile.version>1.4.1</dockerfile.version>
+        <docker.image.prefix>surevine</docker.image.prefix>
     </properties>
 
     <dependencies>
