@@ -20,8 +20,6 @@ public class SignupPageTests {
   private WebElement inputPassword;
   @FindBy(css = ".btn.btn-primary")
   private WebElement subBtn;
-  @FindBy(linkText = "login")
-  private WebElement ancherLogin;
 
   public SignupPageTests(WebDriver driver) {
     PageFactory.initElements(driver,this);
@@ -38,8 +36,6 @@ public class SignupPageTests {
     inputUsername.sendKeys(uname);
     inputPassword.sendKeys(pwd);
     subBtn.click();
-    driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
-    ancherLogin.click();
   }
 
   public void duplicateUser(WebDriver driver, int port){
@@ -56,6 +52,7 @@ public class SignupPageTests {
     inputPassword.sendKeys("ha11");
     subBtn.click();
     driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
+    driver.get("localhost:" + port + "/signup");
     inputFirstName.clear();
     inputLastName.clear();
     inputUsername.clear();
