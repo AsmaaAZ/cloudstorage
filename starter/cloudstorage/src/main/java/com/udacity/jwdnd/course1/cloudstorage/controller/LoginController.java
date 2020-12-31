@@ -10,4 +10,5 @@ public class LoginController {
   public String getLoginView(){
     return "/login";
   }
+
 }

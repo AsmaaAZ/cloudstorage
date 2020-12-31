@@ -26,11 +26,12 @@ public class SignupController {
   public String registerNewUser(@ModelAttribute("/signup") SuperDuperUsers user, Model model){
     if(!usersService.availableUsername(user.getUsername())){
       model.addAttribute("FailureMessage", true);
+      return "signup";
     } else {
       int rowsAdded = usersService.insertNewUser(user);
       if(rowsAdded == 1)
         model.addAttribute("SuccessfulMessage", true);
+        return "login";
     }
-    return "signup";
   }
 }
