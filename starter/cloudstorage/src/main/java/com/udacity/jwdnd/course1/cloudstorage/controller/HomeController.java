@@ -104,7 +104,7 @@ public class HomeController {
         .getFilesize());
     return ResponseEntity.ok().contentType(MediaType.parseMediaType(df.getContenttype()))
         .header(HttpHeaders.CONTENT_DISPOSITION,
-            "attachment; filename:\"" + df.getFilename() + "\"")
+            "attachment; filename=" + df.getFilename())
         .body(df.getFiledata());
   }
 
