@@ -21,7 +21,7 @@
     </div>
     <div class="alert alert-danger fill-parent" th:if="${fileTooBigFailure}">
         <h1 class="display-5">Error</h1>
-        <span>your file is too big</span>
+        <span>your file is too big, max size of any file is 2MB</span>
         <span>Click <a th:href="@{/home}">here</a> to continue.</span>
     </div>
     <div class="alert alert-danger fill-parent" th:if="${fileExists}">

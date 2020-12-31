@@ -18,11 +18,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class HomeController {
@@ -74,18 +77,12 @@ public class HomeController {
 
     if (fileUpload.isEmpty()) {
       model.addAttribute("fileFailure", true);
-    } else {
-      if (fileUpload.getSize() >= 10 * (1024 * 1024)) {
-        model.addAttribute("fileTooBigFailure", true);
-        return "result";
-      }
-      if (!filesService.isFileExist(fileUpload.getOriginalFilename())) {
+    } else if (!filesService.isFileExist(fileUpload.getOriginalFilename())) {
         model.addAttribute("fileExists", true);
       } else {
         filesService.insertFile(file);
         model.addAttribute("fileSuccess", true);
       }
-    }
     return "result";
   }
 
