@@ -2,9 +2,13 @@ package com.udacity.jwdnd.course1.cloudstorage.model;
 // @author asmaa **
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class SuperDuperNotes {
-  private Integer noteId, userid;
-  private String noteTitle, noteDescription;
+  private @Getter @Setter
+  Integer noteId, userid;
+  private @Getter @Setter String noteTitle, noteDescription;
 
   public SuperDuperNotes() {
   }
@@ -14,38 +18,6 @@ public class SuperDuperNotes {
     this.noteId = noteId;
     this.userid = userid;
     this.noteTitle = noteTitle;
-    this.noteDescription = noteDescription;
-  }
-
-  public Integer getNoteId() {
-    return noteId;
-  }
-
-  public void setNoteId(Integer noteId) {
-    this.noteId = noteId;
-  }
-
-  public Integer getUserid() {
-    return userid;
-  }
-
-  public void setUserid(Integer userid) {
-    this.userid = userid;
-  }
-
-  public String getNoteTitle() {
-    return noteTitle;
-  }
-
-  public void setNoteTitle(String noteTitle) {
-    this.noteTitle = noteTitle;
-  }
-
-  public String getNoteDescription() {
-    return noteDescription;
-  }
-
-  public void setNoteDescription(String noteDescription) {
     this.noteDescription = noteDescription;
   }
 }
