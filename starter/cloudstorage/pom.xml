@@ -19,7 +19,6 @@
         <dockerfile.version>1.4.1</dockerfile.version>
         <docker.image.prefix>surevine</docker.image.prefix>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
